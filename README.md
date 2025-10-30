@@ -1,31 +1,28 @@
 # Kiroku - Anime Tracker
 
-Sistema de seguimiento de anime con integración a **MyAnimeList** a través de la API de Jikan v4.
+Aplicación web para hacer seguimiento de tus animes favoritos usando datos de MyAnimeList.
 
 ## Características
 
-- Búsqueda en tiempo real de millones de animes de MyAnimeList
-- Autenticación de usuarios (JWT)
-- Lista personal de seguimiento (watching, completed, plan to watch)
+- Búsqueda de animes desde MyAnimeList (Jikan API)
+- Sistema de autenticación con JWT
+- Lista personal de animes (watching, completed, plan to watch)
 - Seguimiento de progreso por episodios
-- Infinite scroll para navegación fluida
-- Datos completos de Jikan API (imágenes, ratings, géneros, sinopsis)
-- UI moderna con Tailwind CSS y Font Awesome
+- Información detallada de cada anime
 
 ## Tecnologías
 
-### Backend
-- Node.js + Express - Servidor web
-- SQLite/JSON - Base de datos local
-- bcrypt - Hash de contraseñas
-- jsonwebtoken - Autenticación JWT
-- Jikan API v4 - Datos de MyAnimeList
+**Backend:**
+- Node.js + Express
+- JSON Database (temporal)
+- bcrypt para contraseñas
+- JWT para autenticación
+- Jikan API v4
 
-### Frontend
-- Vanilla JavaScript - Sin frameworks
-- Tailwind CSS - Estilos
-- Font Awesome - Iconos
-- Fetch API - Peticiones HTTP
+**Frontend:**
+- Vanilla JavaScript
+- Tailwind CSS
+- Font Awesome (CDN)
 
 ## Instalación
 
@@ -35,128 +32,66 @@ pnpm install
 
 # Configurar variables de entorno
 cp .env.example .env
-# Edita .env y configura JWT_SECRET
+# Editar .env y configurar JWT_SECRET
 
 # Iniciar servidor
 pnpm dev
 ```
 
-## Uso
+El servidor corre en `http://localhost:3000`
 
-1. Abre **http://localhost:3000**
-2. Regístrate o inicia sesión en `/login`
-3. Explora animes de la **temporada actual** (carga automática)
-4. **Busca** cualquier anime de MyAnimeList
-5. Haz **clic en un anime** para importarlo y ver detalles
-6. **Agrégalo a tu lista** personal
-7. Gestiona tu **progreso** en "My List"
-
-## Estructura del Proyecto
+## Estructura
 
 ```
-kiroku-manga-tracker/
 ├── public/
-│   ├── css/              # Estilos CSS
-│   ├── app.js            # Cliente API + UI Components
-│   └── logo-kiroku.png
-├── views/                # Páginas HTML
-│   ├── anime_search_&_browse.html    # Búsqueda con Jikan API
-│   ├── anime_detail_screen.html      # Detalles del anime
-│   ├── watchlist_dashboard.html      # Lista personal
-│   ├── user_authentication.html      # Login/Registro
-│   ├── community_&_reviews.html
-│   └── settings_&_profile.html
-├── db.js                 # Configuración de base de datos
-├── router.js             # Rutas API + Jikan endpoints
-├── server.js             # Servidor Express
-├── .env.example          # Variables de entorno
-├── package.json
-├── README.md
-└── JIKAN_API.md          # Documentación de Jikan API
+│   ├── css/           # Estilos
+│   └── app.js         # Cliente API
+├── views/             # Páginas HTML
+├── db.js              # Base de datos
+├── router.js          # Rutas API
+└── server.js          # Servidor
 ```
 
 ## API Endpoints
 
-### Autenticación
-- `POST /api/auth/register` - Registrar usuario
-- `POST /api/auth/login` - Iniciar sesión
+**Autenticación:**
+- `POST /api/auth/register` - Registro
+- `POST /api/auth/login` - Login
 
-### Lista de Usuario (requiere autenticación)
-- `GET /api/user/anime?status=watching` - Obtener lista filtrada
-- `POST /api/user/anime` - Agregar anime a lista
-- `PUT /api/user/anime/:id` - Actualizar progreso
-- `DELETE /api/user/anime/:id` - Eliminar de lista
+**Lista de usuario:**
+- `GET /api/user/anime` - Obtener lista
+- `POST /api/user/anime` - Agregar anime
+- `PUT /api/user/anime/:id` - Actualizar
+- `DELETE /api/user/anime/:id` - Eliminar
 
-### Jikan API (MyAnimeList)
-- `GET /api/jikan/search?q=naruto&page=1` - Buscar animes
-- `GET /api/jikan/anime/:id` - Obtener anime completo (`/full`)
-- `GET /api/jikan/top?page=1` - Top animes de MAL
-- `GET /api/jikan/season/now?page=1` - Temporada actual
-- `POST /api/jikan/import/:id` - Importar anime a BD local
+**Jikan API:**
+- `GET /api/jikan/search` - Buscar animes
+- `GET /api/jikan/anime/:id` - Detalles completos
+- `GET /api/jikan/top` - Top animes
+- `GET /api/jikan/season/now` - Temporada actual
+- `POST /api/jikan/import/:id` - Importar a BD local
 
-## Datos de Jikan API
+## Uso
 
-Cada anime incluye:
-- **Imágenes:** JPG (normal, large), WebP
-- **Títulos:** Inglés, japonés, romaji
-- **Metadata:** Sinopsis, rating, popularidad, miembros
-- **Episodios:** Total, estado (airing/finished)
-- **Clasificación:** Géneros, temas, demografía
-- **Producción:** Estudios, productores
-- **Fechas:** Emisión, temporada, año
+1. Registrarse o iniciar sesión
+2. Buscar animes desde la página principal
+3. Ver detalles haciendo clic en un anime
+4. Agregar a tu lista personal
+5. Gestionar tu progreso desde "My List"
 
-Ver **[JIKAN_API.md](./JIKAN_API.md)** para documentación completa.
+## Notas
 
-## Seguridad
-
-- Contraseñas hasheadas con **bcrypt** (10 rounds)
-- Autenticación **JWT** (tokens de 7 días)
-- Validación de datos en backend
-- Tokens en localStorage
-- Rate limiting respetado (Jikan: 3 req/s)
+- Los datos de animes vienen de MyAnimeList a través de Jikan API
+- La base de datos usa JSON temporalmente (se puede migrar a SQLite)
+- Los animes se importan automáticamente al hacer clic en ellos
 
 ## Scripts
 
 ```bash
-pnpm dev      # Desarrollo con nodemon
+pnpm dev      # Desarrollo
 pnpm start    # Producción
 ```
 
-## ⚡ Optimizaciones
-
-- **Debounce** en búsqueda (500ms) para evitar spam
-- **Infinite scroll** para paginación automática
-- **Cache local** de animes importados
-- **Fallbacks** de imágenes si faltan datos
-- **Optional chaining** para datos opcionales
-
-## 🎯 Flujo de Trabajo
-
-```
-Usuario busca "Naruto"
-    ↓
-Jikan API retorna resultados
-    ↓
-Usuario hace clic en un anime
-    ↓
-Anime se importa a BD local
-    ↓
-Usuario lo agrega a su lista
-    ↓
-Seguimiento de progreso
-```
-
-## 🔗 Enlaces
-
-- **Jikan API Docs:** https://docs.api.jikan.moe/
-- **MyAnimeList:** https://myanimelist.net/
-- **Tailwind CSS:** https://tailwindcss.com/
-- **Font Awesome:** https://fontawesome.com/
-
-## 📄 Licencia
+## Licencia
 
 MIT
-
----
-
-**¡Millones de animes de MyAnimeList al alcance de tu mano!** 🎉
