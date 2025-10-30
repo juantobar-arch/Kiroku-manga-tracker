@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kiroku — Anime Detail</title>
+    <link rel="stylesheet" href="/public/css/anime-detail.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </head>
+
+  <body class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__left">
+        <div class="header__logo">
+          <img
+            src="/public/logo-kiroku.png"
+            alt="Kiroku logo"
+            class="header__logo-img"
+          />
+          <a href="anime_search_&_browse.html" class="header__logo-title"
+            >Kiroku</a
+          >
+        </div>
+
+        <nav class="nav">
+          <a href="anime_search_&_browse.html" class="nav__link">Home</a>
+          <a href="anime_search_&_browse.html" class="nav__link">Explore</a>
+          <a href="watchlist_dashboard.html" class="nav__link">My List</a>
+        </nav>
+      </div>
+
+      <div class="header__right">
+        <div class="header__search">
+          <span class="header__search-icon"><i class="fas fa-search"></i></span>
+          <input
+            type="search"
+            placeholder="Search"
+            class="header__search-input"
+          />
+        </div>
+
+        <button class="header__notifications"><i class="fas fa-bell"></i></button>
+
+        <div
+          class="header__avatar"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMUvM7R5WB9Pkmfeh9HXmnOHBYPniznqGY7Wr0RsMsLSAgAeFR3npjRP5QK9TLd4KR5JH5rP1EB6hU4xN-nlDn-vmPCIuSLFdiwpfLzPu3ij8GcKEWZxnX0aY75OEQ-EsJF-kK1cBANsetOQ69ilhQl5Y0enUpZ3WEEg67ou3WJ7xOTWdgJPp-zeykepsZnZj0xTKqenHHPX83aD3jGQrfurErlG_P_0o2UdsTDnU4LW7iBKJXVjy1s7MPv2YNijZqO1SObmzf3d4');
+          "
+        ></div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="detail" id="anime-detail">
+      <div class="loading" style="text-align: center; padding: 100px 20px; color: #9ca3af;">
+        Cargando detalles del anime...
+      </div>
+    </main>
+
+    <script src="/public/app.js"></script>
+    <script>
+      // Obtener parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const jikanId = urlParams.get('jikan_id');
+      const localId = urlParams.get('id');
+
+      if (!jikanId) {
+        document.getElementById('anime-detail').innerHTML = '<p style="text-align: center; padding: 100px 20px; color: #ef4444;">Error: No se especificó el ID del anime</p>';
+      } else {
+        loadAnimeDetails(jikanId, localId);
+      }
+
+      async function loadAnimeDetails(jikanId, localId) {
+        try {
+          // Obtener datos completos de Jikan API
+          const response = await API.getJikanAnime(jikanId);
+          const anime = response.data;
+
+          if (!anime) {
+            throw new Error('Anime no encontrado');
+          }
+
+          // Renderizar detalles
+          renderAnimeDetails(anime, localId);
+        } catch (error) {
+          console.error('Error loading anime:', error);
+          document.getElementById('anime-detail').innerHTML = 
+            '<p style="text-align: center; padding: 100px 20px; color: #ef4444;">Error al cargar los detalles del anime</p>';
+        }
+      }
+
+      function renderAnimeDetails(anime, localId) {
+        const container = document.getElementById('anime-detail');
+        
+        // Imagen de fondo (banner o cover)
+        const bgImage = anime.images?.jpg?.large_image_url || anime.images?.jpg?.image_url || '';
+        
+        // Géneros
+        const genres = anime.genres?.map(g => g.name) || [];
+        const themes = anime.themes?.map(t => t.name) || [];
+        const allGenres = [...genres, ...themes];
+        
+        // Rating (estrellas)
+        const score = anime.score || 0;
+        const fullStars = Math.floor(score / 2);
+        const halfStar = (score / 2) % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        
+        let starsHTML = '';
+        for (let i = 0; i < fullStars; i++) starsHTML += '<i class="fas fa-star"></i>';
+        if (halfStar) starsHTML += '<i class="fas fa-star-half-alt"></i>';
+        for (let i = 0; i < emptyStars; i++) starsHTML += '<i class="far fa-star"></i>';
+
+        // Información adicional
+        const episodes = anime.episodes || '?';
+        const status = anime.status || 'Unknown';
+        const aired = anime.aired?.string || 'N/A';
+        const studios = anime.studios?.map(s => s.name).join(', ') || 'Unknown';
+        const source = anime.source || 'Unknown';
+        const duration = anime.duration || 'Unknown';
+
+        container.innerHTML = `
+          <div class="detail__hero" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, transparent 40%), url('${bgImage}');">
+            <h1 class="detail__title">${anime.title}</h1>
+            ${anime.title_english && anime.title_english !== anime.title ? `<p style="color: #d1d5db; font-size: 1.2rem; margin-top: 0.5rem;">${anime.title_english}</p>` : ''}
+          </div>
+
+          <div class="detail__content">
+            <!-- Left Section -->
+            <section class="detail__main">
+              <article class="synopsis">
+                <h2 class="synopsis__title">Synopsis</h2>
+                <p class="synopsis__text">${anime.synopsis || 'No synopsis available.'}</p>
+              </article>
+
+              <div class="info-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Episodes</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${episodes}</p>
+                </div>
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Status</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${status}</p>
+                </div>
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Aired</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${aired}</p>
+                </div>
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Studios</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${studios}</p>
+                </div>
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Source</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${source}</p>
+                </div>
+                <div>
+                  <h3 style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem;">Duration</h3>
+                  <p style="color: white; font-size: 1.125rem; font-weight: 600;">${duration}</p>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="actions__btn actions__btn--primary" id="add-to-list-btn">
+                  <i class="fas fa-plus"></i> Add to Watchlist
+                </button>
+                <button class="actions__btn actions__btn--secondary" onclick="window.history.back()">
+                  <i class="fas fa-arrow-left"></i> Back
+                </button>
+              </div>
+            </section>
+
+            <!-- Right Section -->
+            <aside class="detail__sidebar">
+              <div class="genres">
+                <h3 class="genres__title">Genres & Themes</h3>
+                <div class="genres__list">
+                  ${allGenres.map(g => `<span class="genres__item">${g}</span>`).join('')}
+                </div>
+              </div>
+
+              <div class="ratings">
+                <h3 class="ratings__title">Rating</h3>
+                <div class="ratings__summary">
+                  <p class="ratings__score">${score.toFixed(1)}</p>
+                  <div class="ratings__stars">
+                    ${starsHTML}
+                  </div>
+                  <p class="ratings__reviews">${anime.scored_by?.toLocaleString() || 0} users</p>
+                </div>
+
+                <div style="margin-top: 1.5rem;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #9ca3af; font-size: 0.875rem;">Rank</span>
+                    <span style="color: white; font-weight: 600;">#${anime.rank || 'N/A'}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #9ca3af; font-size: 0.875rem;">Popularity</span>
+                    <span style="color: white; font-weight: 600;">#${anime.popularity || 'N/A'}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #9ca3af; font-size: 0.875rem;">Members</span>
+                    <span style="color: white; font-weight: 600;">${anime.members?.toLocaleString() || 0}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #9ca3af; font-size: 0.875rem;">Favorites</span>
+                    <span style="color: white; font-weight: 600;">${anime.favorites?.toLocaleString() || 0}</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        `;
+
+        // Agregar funcionalidad al botón "Add to Watchlist"
+        const addBtn = document.getElementById('add-to-list-btn');
+        addBtn.addEventListener('click', async () => {
+          if (!Storage.isAuthenticated()) {
+            UI.showNotification('Debes iniciar sesión para agregar a tu lista', 'error');
+            setTimeout(() => window.location.href = 'user_authentication.html', 1500);
+            return;
+          }
+
+          try {
+            // Si no tenemos localId, importar primero
+            let animeId = localId;
+            if (!animeId) {
+              const imported = await API.importJikanAnime(anime.mal_id);
+              animeId = imported.id;
+            }
+
+            // Agregar a la lista
+            await API.addToList(animeId, 'plan_to_watch', 0);
+            UI.showNotification('Anime agregado a tu lista!', 'success');
+            addBtn.innerHTML = '<i class="fas fa-check"></i> Added to List';
+            addBtn.disabled = true;
+            addBtn.style.opacity = '0.6';
+          } catch (error) {
+            if (error.message.includes('ya está en tu lista')) {
+              UI.showNotification('Este anime ya está en tu lista', 'error');
+            } else {
+              UI.showNotification(error.message, 'error');
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

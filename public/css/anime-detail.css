@@ -1,0 +1,265 @@
+:root {
+  --bg-dark: #111118;
+  --panel: #292938;
+  --text: #ffffff;
+  --text-light: #b1b1c6;
+  --primary: #6366f1;
+  --hover: #3c3c53;
+}
+
+/* General */
+body {
+  margin: 0;
+  font-family: "Noto Sans", sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--panel);
+  padding: 1rem 2rem;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__logo-img {
+  width: 32px;
+  height: 32px;
+}
+
+.header__logo-title {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav__link {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav__link:hover {
+  color: var(--text);
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__search {
+  position: relative;
+}
+
+.header__search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.header__search-input {
+  background: var(--panel);
+  color: var(--text);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+}
+
+.header__notifications {
+  background: var(--panel);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.header__notifications:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.header__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  transition: border 0.2s;
+}
+
+.header__avatar:hover {
+  border: 2px solid var(--primary);
+}
+
+/* DETAIL PAGE */
+.detail {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+}
+
+.detail__hero {
+  height: 320px;
+  border-radius: 1rem;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: end;
+  padding: 2rem;
+}
+
+.detail__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* CONTENT */
+.detail__content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.synopsis__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.synopsis__text {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.actions__btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actions__btn--primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.actions__btn--primary:hover {
+  background: #4f46e5;
+}
+
+.actions__btn--secondary {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.actions__btn--secondary:hover {
+  background: var(--hover);
+}
+
+/* GENRES */
+.genres__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.genres__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genres__item {
+  background: var(--panel);
+  border-radius: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+/* RATINGS */
+.ratings__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.ratings__summary {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.ratings__score {
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.ratings__reviews {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.ratings__breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ratings__bar {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ratings__bar div {
+  background: var(--text);
+  height: 6px;
+  border-radius: 10px;
+}

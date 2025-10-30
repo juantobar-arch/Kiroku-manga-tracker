@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kiroku</title>
+    <link rel="stylesheet" href="/public/css/anime-search.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </head>
+
+  <body class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__left">
+        <div class="header__logo">
+          <img src="/public/logo-kiroku.png" alt="Kiroku logo" class="header__logo-img" />
+          <a href="#" class="header__logo-title">Kiroku</a>
+        </div>
+
+        <nav class="nav">
+          <a href="#" class="nav__link">Home</a>
+          <a href="#" class="nav__link">My List</a>
+          <a href="#" class="nav__link">Browse</a>
+        </nav>
+      </div>
+
+      <div class="header__right">
+        <div class="search-box">
+          <span class="search-box__icon"><i class="fas fa-search"></i></span>
+          <input
+            class="search-box__input"
+            type="search"
+            placeholder="Search"
+          />
+        </div>
+
+        <div
+          class="avatar"
+          style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUhNUZ-TaKkscdiaeWbU0zeYhqkCIqBbaFtSE9LonQSSwOArZDYalO3sF3ner7S_9q4xKkjb2TQqcPzEwDjXSKI3JpYSDtqFwAseYSfUTMJoAcEgiVTVuaMRAlCHNi02Qixf3vCh6K-ahol5hrFkEZliXQGNgu2aKpxjMpDKpP24N6FHlCUOTGuk8k6TPHxuTIl2zTJuANmigGbvJhdUAQLsDJ6GiNXzk-0aGrUKvnoQSs4SklgE2cIt7mmf1UXgGQBwITTdjgXP4');"
+        ></div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <section class="search">
+        <div class="search__bar">
+          <span class="search__icon"><i class="fas fa-search"></i></span>
+          <input
+            class="search__input"
+            type="search"
+            placeholder="Search for an anime, like 'Attack on Titan'"
+          />
+        </div>
+
+        <div class="search__filters">
+          <button class="search__button">Genre</button>
+          <button class="search__button">Season</button>
+          <button class="search__button">Rating</button>
+        </div>
+      </section>
+
+      <!-- ANIME GRID -->
+      <section class="anime-grid">
+        <article class="anime-card">
+          <div
+            class="anime-card__cover"
+            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNywvxzPxBx-wQKwF4_j9xGF86WOayLc-r-zKqC_fxOIv7iHlof_cY2pQ8xC_nmMPH6nS3zSE1FacXFhqTARX17PkrIY9y1SzGdIbWKrqpHb3exoCOMA4MqJi3YVpivb__KLhLmZxWdPLQY6zjGxMYNW2W-a00WrhtEAh2imqfd3ZRd0juVbxPjkYriIpM4iT8FEQ5VpetJB_sFkIE5AlCBlUUKiLPOEBv1E0HB_pDWYyZLWROBmYZVdf8z9ddyhfKnSyktG9BacE');"
+          ></div>
+
+          <div class="anime-card__info">
+            <h3 class="anime-card__title">Attack on Titan</h3>
+            <p class="anime-card__meta">Action, Fantasy | 4 Seasons</p>
+          </div>
+        </article>
+
+        <article class="anime-card">
+          <div
+            class="anime-card__cover"
+            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBz4-XZCWtl9iWFXJop7ahTfXNwHdEgWnj6tIkCAGYbt5jYmb6lsz-25HEIGjc9JYoGO453kEV2iKZw4igbTTlDMaIKa-Mu0BairIJDUWYNsdJTvvk9GAFnEBSXNYeRCw8OLrd-3OjAxuZJtkHZ0yjDiupO8GQoWEIW3iwaPjjHYW2NOsJq1aRFBAUZxTqC4GShvsP-fRV5juD61FzKoSg5n9CUvGkkGFrgsjz42fe7GcnK90VnRWoGW4BzjKe_TJpWaLEQYcsPqkk');"
+          ></div>
+
+          <div class="anime-card__info">
+            <h3 class="anime-card__title">Demon Slayer</h3>
+            <p class="anime-card__meta">Action, Adventure | 3 Seasons</p>
+          </div>
+        </article>
+      </section>
+    </main>
+    <script src="/public/app.js"></script>
+    <script>
+      let currentPage = 1;
+      let isLoading = false;
+
+      // Cargar animes desde Jikan API
+      async function loadAnimes(search = '', page = 1) {
+        const grid = document.querySelector('.anime-grid');
+        
+        if (page === 1) {
+          UI.showLoading(grid);
+        }
+        
+        isLoading = true;
+
+        try {
+          let data;
+          
+          if (search) {
+            data = await API.searchJikan(search, page, 25);
+          } else {
+            data = await API.getCurrentSeasonAnimes(page);
+          }
+
+          if (page === 1) {
+            grid.innerHTML = '';
+          }
+
+          if (!data.data || data.data.length === 0) {
+            if (page === 1) {
+              grid.innerHTML = '<p style="text-align: center; padding: 40px; color: #9ca3af;">No se encontraron animes</p>';
+            }
+            return;
+          }
+
+          data.data.forEach(anime => {
+            const card = UI.createAnimeCard(anime, async (jikanAnime) => {
+              // Importar anime a la BD local y redirigir
+              try {
+                const imported = await API.importJikanAnime(jikanAnime.mal_id);
+                window.location.href = `anime_detail_screen.html?id=${imported.id}&jikan_id=${jikanAnime.mal_id}`;
+              } catch (error) {
+                UI.showNotification(error.message, 'error');
+              }
+            });
+            grid.appendChild(card);
+          });
+
+          currentPage = page;
+        } catch (error) {
+          UI.showNotification(error.message, 'error');
+          if (page === 1) {
+            grid.innerHTML = '<p style="text-align: center; padding: 40px; color: #9ca3af;">Error al cargar animes</p>';
+          }
+        } finally {
+          isLoading = false;
+        }
+      }
+
+      // Buscar animes con debounce
+      let searchTimeout;
+      const searchInputs = document.querySelectorAll('.search__input, .search-box__input');
+      searchInputs.forEach(input => {
+        input.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          const search = e.target.value;
+          
+          searchTimeout = setTimeout(() => {
+            currentPage = 1;
+            loadAnimes(search, 1);
+          }, 500);
+        });
+      });
+
+      // Infinite scroll (opcional)
+      window.addEventListener('scroll', () => {
+        if (isLoading) return;
+        
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        
+        if (scrollTop + clientHeight >= scrollHeight - 100) {
+          const searchValue = document.querySelector('.search__input')?.value || '';
+          loadAnimes(searchValue, currentPage + 1);
+        }
+      });
+
+      // Cargar inicialmente animes de la temporada actual
+      loadAnimes();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <title>Kiroku</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/public/css/base.css" />
+  </head>
+  <body class="bg-[#111118]">
+    <div
+      class="relative flex h-auto min-h-screen w-full flex-col bg-cover bg-center bg-no-repeat dark group/design-root overflow-x-hidden"
+      style="
+        background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYIAW3JYsGtzN4VuT6HI7TJYUKynpr-7GxaykYYSjJe6ttQDQwWcp4bboHh5UX3HZNCREX4vpZEc1vGl9v8uua2Y3j0ohOknlFHa3OffrQ3sWHLCcElHmsbGnpTHiwS0mTlk75t-9G-KvrcfC9QuYvTYjigenrK2NDdymmtVAIdYPrak8u6_DFQAzTkTDIoa5ZhXa__KQj7yRk6MsIWRFV0KinPYaNMoH2Ah7civ7yQ3QYfD2j77kZq-uwaK7EkZHjh19lfQ6F8nc');
+      "
+    >
+      <div class="absolute inset-0 bg-[#111118]/80 backdrop-blur-sm"></div>
+      <div class="relative layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-white/10 px-10 py-4"
+        >
+          <div class="flex items-center gap-4 text-white">
+            <img src="/public/logo-kiroku.png" alt="Kiroku logo" class="h-8 w-8" />
+            <a href="anime_search_&_browse.html">
+              <h2
+                class="text-white text-xl font-bold leading-tight tracking-[-0.015em]"
+              >
+                Kiroku
+              </h2>
+            </a>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <nav class="hidden md:flex items-center gap-9">
+              <a
+                class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="anime_search_&_browse.html"
+                >Home</a
+              >
+              <a
+                class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="anime_search_&_browse.html"
+                >Explore</a
+              >
+              <a
+                class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="watchlist_dashboard.html"
+                >My List</a
+              >
+              <a
+                class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
+                href="anime_search_&_browse.html"
+                >News</a
+              >
+            </nav>
+            <div class="flex gap-2">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-5 bg-transparent text-white text-sm font-bold leading-normal tracking-[0.015em] border border-white/20 hover:bg-white/10 transition-colors"
+              >
+                <span class="truncate">Log In</span>
+              </button>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-5 bg-[#1919e6] hover:bg-[#1010d4] transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Sign Up</span>
+              </button>
+            </div>
+          </div>
+        </header>
+        <main class="flex-1 flex items-center justify-center py-16">
+          <div
+            class="w-full max-w-md mx-auto p-8 rounded-xl bg-[#181820]/80 border border-white/10 backdrop-blur-lg"
+          >
+            <div class="text-center mb-8">
+              <h2 class="text-white text-3xl font-bold tracking-tight">
+                Create Your Account
+              </h2>
+              <p class="text-white/60 mt-2">
+                Join Animax to track and discover new anime.
+              </p>
+            </div>
+            <form id="auth-form" class="space-y-6">
+              <div>
+                <label class="sr-only" for="email">Email</label>
+                <input
+                  class="form-input block w-full rounded-md border-0 bg-[#292938] h-14 px-4 text-white placeholder:text-[#9d9db8] focus:ring-2 focus:ring-inset focus:ring-[#1919e6] sm:text-sm sm:leading-6"
+                  id="email"
+                  placeholder="Email Address"
+                  type="email"
+                  required
+                />
+              </div>
+              <div>
+                <label class="sr-only" for="password">Password</label>
+                <input
+                  class="form-input block w-full rounded-md border-0 bg-[#292938] h-14 px-4 text-white placeholder:text-[#9d9db8] focus:ring-2 focus:ring-inset focus:ring-[#1919e6] sm:text-sm sm:leading-6"
+                  id="password"
+                  placeholder="Password"
+                  type="password"
+                  required
+                />
+              </div>
+              <div id="confirm-password-container">
+                <label class="sr-only" for="password-confirm"
+                  >Confirm Password</label
+                >
+                <input
+                  class="form-input block w-full rounded-md border-0 bg-[#292938] h-14 px-4 text-white placeholder:text-[#9d9db8] focus:ring-2 focus:ring-inset focus:ring-[#1919e6] sm:text-sm sm:leading-6"
+                  id="password-confirm"
+                  placeholder="Confirm Password"
+                  type="password"
+                />
+              </div>
+              <div>
+                <button
+                  id="submit-btn"
+                  class="flex w-full justify-center rounded-md bg-[#1919e6] h-12 px-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#1010d4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1919e6] transition-colors"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </form>
+            <p class="mt-8 text-center text-sm text-white/60">
+              <span id="toggle-text">Already have an account?</span>
+              <a
+                id="toggle-mode"
+                class="font-semibold leading-6 text-[#1919e6] hover:text-[#1010d4] transition-colors cursor-pointer"
+                >Log in</a
+              >
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/public/app.js"></script>
+    <script>
+      let isSignup = true;
+
+      const form = document.getElementById('auth-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const toggleMode = document.getElementById('toggle-mode');
+      const toggleText = document.getElementById('toggle-text');
+      const confirmPasswordContainer = document.getElementById('confirm-password-container');
+      const title = document.querySelector('h2');
+      const subtitle = document.querySelector('h2 + p');
+
+      // Alternar entre login y signup
+      toggleMode.addEventListener('click', () => {
+        isSignup = !isSignup;
+        
+        if (isSignup) {
+          title.textContent = 'Create Your Account';
+          subtitle.textContent = 'Join Kiroku to track and discover new anime.';
+          submitBtn.textContent = 'Sign Up';
+          toggleText.textContent = 'Already have an account?';
+          toggleMode.textContent = 'Log in';
+          confirmPasswordContainer.style.display = 'block';
+        } else {
+          title.textContent = 'Welcome Back';
+          subtitle.textContent = 'Log in to continue tracking your anime.';
+          submitBtn.textContent = 'Log In';
+          toggleText.textContent = "Don't have an account?";
+          toggleMode.textContent = 'Sign up';
+          confirmPasswordContainer.style.display = 'none';
+        }
+      });
+
+      // Manejar submit
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('password-confirm').value;
+
+        if (isSignup) {
+          if (password !== passwordConfirm) {
+            UI.showNotification('Las contraseñas no coinciden', 'error');
+            return;
+          }
+          await AuthManager.handleRegister(email, password);
+        } else {
+          await AuthManager.handleLogin(email, password);
+        }
+      });
+
+      // Si ya está autenticado, redirigir
+      if (Storage.isAuthenticated()) {
+        window.location.href = '/';
+      }
+    </script>
+  </body>
+</html>

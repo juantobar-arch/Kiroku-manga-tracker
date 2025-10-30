@@ -1,0 +1,208 @@
+:root {
+  --bg-dark: #111118;
+  --panel: #292938;
+  --text: #ffffff;
+  --text-light: #9ca3af;
+  --primary: #6366f1;
+  --hover: #3f3f46;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans", sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--panel);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__logo-img {
+  width: 28px;
+  height: 28px;
+}
+
+.header__logo-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav__link {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav__link:hover {
+  color: var(--text);
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* SEARCH BOX (header) */
+.search-box {
+  position: relative;
+}
+
+.search-box__icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.search-box__input {
+  background: var(--panel);
+  border: none;
+  border-radius: 0.4rem;
+  color: var(--text);
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+}
+
+/* AVATAR */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  transition: border 0.2s;
+}
+
+.avatar:hover {
+  border: 2px solid var(--primary);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* SEARCH SECTION */
+.search {
+  margin-bottom: 2rem;
+}
+
+.search__bar {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search__icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.search__input {
+  width: 100%;
+  background: var(--panel);
+  color: var(--text);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem 1rem 1rem 3rem;
+}
+
+.search__filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.search__button {
+  background: var(--panel);
+  color: var(--text);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search__button:hover {
+  background: var(--hover);
+}
+
+/* GRID */
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CARD */
+.anime-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.anime-card__cover {
+  aspect-ratio: 3 / 4;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.anime-card:hover .anime-card__cover {
+  transform: scale(1.05);
+}
+
+.anime-card__title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.anime-card:hover .anime-card__title {
+  color: var(--primary);
+}
+
+.anime-card__meta {
+  color: var(--text-light);
+  font-size: 0.875rem;
+}

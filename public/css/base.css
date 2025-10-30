@@ -1,0 +1,32 @@
+/* Global base styles for Kiroku Manga Tracker */
+@import url('https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700');
+
+:root {
+  --primary-color: #6366f1;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.nav-link {
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.avatar {
+  background-size: cover;
+  background-position: center;
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  transition: border 0.3s;
+}
+
+.avatar:hover {
+  border-color: var(--primary-color);
+}

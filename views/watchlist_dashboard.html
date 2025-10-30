@@ -1,0 +1,403 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <title>Kiroku</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/watchlist-dashboard.css" />
+  </head>
+  <body
+    class="bg-neutral-900 text-neutral-100"
+  >
+    <div
+      class="relative flex h-auto min-h-screen w-full flex-col bg-neutral-900 dark group/design-root overflow-x-hidden"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-800 px-10 py-4"
+        >
+          <div class="flex items-center gap-10">
+            <div class="flex items-center gap-3 text-white">
+              <img src="/public/logo-kiroku.png" alt="Kiroku logo" class="h-8 w-8" />
+              <a href="anime_search_&_browse.html">
+                <h1 class="text-xl font-bold tracking-tight">Kiroku</h1>
+              </a>
+            </div>
+            <nav class="hidden md:flex items-center gap-8">
+              <a
+                class="text-neutral-300 hover:text-white transition-colors text-sm font-medium"
+                href="anime_search_&_browse.html"
+                >Home</a
+              >
+              <a
+                class="text-neutral-300 hover:text-white transition-colors text-sm font-medium"
+                href="anime_search_&_browse.html"
+                >Explore</a
+              >
+              <a class="text-white text-sm font-medium" href="watchlist_dashboard.html">My List</a>
+            </nav>
+          </div>
+          <div class="flex flex-1 justify-end items-center gap-4">
+            <label class="relative hidden sm:flex">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <i class="fas fa-search text-neutral-400"></i>
+              </div>
+              <input
+                class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary-500 border-none bg-neutral-800 focus:border-none h-10 placeholder:text-neutral-400 pl-10 pr-4 text-sm font-normal"
+                placeholder="Search"
+                value=""
+              />
+            </label>
+            <button
+              class="relative flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-neutral-800 text-neutral-300 hover:bg-neutral-700 hover:text-white transition-colors"
+            >
+              <i class="fas fa-bell"></i>
+              <div
+                class="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-primary-500"
+              ></div>
+            </button>
+            <button>
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-transparent hover:border-primary-500 transition-all"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYIrdk05gC2V-5HnbPx_pzcJ2qUb1xSHtVFLdC0hKJITMndVCxGvxlZ8G3XYcfGwaixOGHmE5cVXVPau226r3Ku-tw6irgCDfOTI9fB-AWHMIPvTAwmZUoWVi78hjF5xcBZd2gi37oHUuwVMna0lJ-9UDVfpqhYQ4tFu0Hn5cZ4KbOXqQHNieNSlhDGxj_H6ijG7xyDfwxT2y_J49QBZl4Lzjh8bAduK4UAvU5Z2eFoiWKbyUU2N-a-IT6RPSJzzMXJ720YuQdZm0');
+                "
+              ></div>
+            </button>
+          </div>
+        </header>
+        <main
+          class="px-4 sm:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-8"
+        >
+          <div class="layout-content-container flex flex-col w-full max-w-5xl">
+            <div
+              class="flex flex-wrap justify-between items-center gap-4 mb-6 px-4"
+            >
+              <h2 class="text-white text-3xl font-bold tracking-tight">
+                My Anime List
+              </h2>
+            </div>
+            <div class="border-b border-neutral-800 mb-6">
+              <div class="flex px-4 gap-8">
+                <a
+                  class="flex flex-col items-center justify-center border-b-2 border-primary-500 text-white pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-sm font-semibold">Currently Watching</p>
+                </a>
+                <a
+                  class="flex flex-col items-center justify-center border-b-2 border-transparent text-neutral-400 hover:text-white hover:border-neutral-400 transition-all pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-sm font-semibold">Completed</p>
+                </a>
+                <a
+                  class="flex flex-col items-center justify-center border-b-2 border-transparent text-neutral-400 hover:text-white hover:border-neutral-400 transition-all pb-3 pt-2"
+                  href="#"
+                >
+                  <p class="text-sm font-semibold">Plan to Watch</p>
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-2">
+              <div
+                class="flex items-center gap-4 hover:bg-neutral-800 rounded-lg px-4 py-3 transition-colors duration-200 justify-between"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-md w-12"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBs7XPu-lmnzMK0pmIlosb8whVO_-kWcY1Vg1VdSf8rX7s_hPpV48fibnYJrgMDH_hVlk0Yn_4sSAmU3z4DJagVJvKOQFpjFbIXukgFCjkhso5nZWTopOs7F2QBQelPnsF3-Lcb7WX7xvUc-uDCD0uLFt82d9YqsAIT-fl5dHBUS0mo5XCsRJCimdUjI6ax5rx1A8ZSATj8SR7AurmALKKSvH6GCfSFI4H5V4B9frBlsbUosVIthbMBeJwC1gkpIfYJ0GT-ijx8foA');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-white text-base font-medium leading-normal line-clamp-1"
+                    >
+                      The Hero's Journey
+                    </p>
+                    <p
+                      class="text-neutral-400 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Episode 10 of 24
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-24 sm:w-32">
+                    <div class="w-full bg-neutral-700 rounded-full h-1.5">
+                      <div
+                        class="bg-primary-500 h-1.5 rounded-full progress-bar-value"
+                        style="width: 42%"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-neutral-300 text-sm font-medium w-8 text-right"
+                  >
+                    42%
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 hover:bg-neutral-800 rounded-lg px-4 py-3 transition-colors duration-200 justify-between"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-md w-12"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBoq-oM5BbMVkBKa3aVlBocKk609q-NIcjLtPcv9WX1zwflxGmY9JULjo-TiUacxXyUtG2QNFIuN1EjBW8KVy5FWfsrxu7C7YMMm16sbwZikfgkfTMvSqgqZzNec-lwzcIvFYBGwYn97mXP0SM2KXXpfkCFGC71NXvxnhjIa1OOqrYQYV9FHAFlDozU0mWInnKfU0F5HgCaB6QE-rifoLHszKa9nPFs6cssQ-KMIT5XrxMAGOB7-awhXpJoiOVl5pKmKUO8CLi5tuI');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-white text-base font-medium leading-normal line-clamp-1"
+                    >
+                      Mystic Guardians
+                    </p>
+                    <p
+                      class="text-neutral-400 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Episode 5 of 12
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-24 sm:w-32">
+                    <div class="w-full bg-neutral-700 rounded-full h-1.5">
+                      <div
+                        class="bg-primary-500 h-1.5 rounded-full progress-bar-value"
+                        style="width: 41%"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-neutral-300 text-sm font-medium w-8 text-right"
+                  >
+                    41%
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 hover:bg-neutral-800 rounded-lg px-4 py-3 transition-colors duration-200 justify-between"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-md w-12"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALNc5yblkX9RDlJ2CYtpCQY_jneyeaQhxx9knpEYgcJvunpdHU1sZXlUDFsIZj5MRhLERxZwE-oWaF11ImjFMs73vJJ74qC4pdNSzuPcaI0UuTZdXx2m5rv0m0b8ya5uNxeq-3EA1YKQnaaZpw-EccupvXn-4NnX1syiKOC7LgaYOJKdIv6TiiOkvriQXBVrv5aOjS1prq_ZAUj9tR_0Fv1JOweabNP-BBC3A2olFqTtzuLDsvb2Pae2dn7rAPoTd_DHOB2-I-GLQ');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-white text-base font-medium leading-normal line-clamp-1"
+                    >
+                      Chronicles of the Celestial War
+                    </p>
+                    <p
+                      class="text-neutral-400 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Episode 18 of 20
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-24 sm:w-32">
+                    <div class="w-full bg-neutral-700 rounded-full h-1.5">
+                      <div
+                        class="bg-primary-500 h-1.5 rounded-full progress-bar-value"
+                        style="width: 90%"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-neutral-300 text-sm font-medium w-8 text-right"
+                  >
+                    90%
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 hover:bg-neutral-800 rounded-lg px-4 py-3 transition-colors duration-200 justify-between"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-md w-12"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA664lKqjRrZQHbOvx5FQK4xngBjEuG_LltrMDKi9-wYLOfch332n27ecsjnG3Qzp88tbGLu2Uw6ZnUGFVw0rJPY5H1NYBPuwb0_vTwCAEztuZabU44KSpuIHVdviCccGfg-9hApvmmPe6MI8HfTIwR8s_lXduUN314_e7NB_l6m-k1Rx7t9_3dmA84Y44EJXPXwQJTO4Zd7bN8Uc9lggzh9D0sh7yYGa3nW7Ov_BvUb1iRRpCZZ6taBVMnA3lheyFeTUmhOFqktpg');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-white text-base font-medium leading-normal line-clamp-1"
+                    >
+                      The Alchemist's Legacy
+                    </p>
+                    <p
+                      class="text-neutral-400 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Episode 2 of 13
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-24 sm:w-32">
+                    <div class="w-full bg-neutral-700 rounded-full h-1.5">
+                      <div
+                        class="bg-primary-500 h-1.5 rounded-full progress-bar-value"
+                        style="width: 15%"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-neutral-300 text-sm font-medium w-8 text-right"
+                  >
+                    15%
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 hover:bg-neutral-800 rounded-lg px-4 py-3 transition-colors duration-200 justify-between"
+              >
+                <div class="flex items-center gap-4">
+                  <div
+                    class="bg-center bg-no-repeat aspect-[2/3] bg-cover rounded-md w-12"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbfptIgW1hzIQ2nqZmVQtCvt7PEUbLCl1cERlaOLE4A40El8LdFGSXSl59F-cp75_vTNA7XTE7No5kLONpZI3wC6Z7aRUGJhmL7gEHfdQ7rEnkHSGAw4vcuvpqzxpZvEF0a_SsFfRfBhUgAaKybXStcJJF1cTuW1sr2sESb9kwOpQ7vIqk7NtNu-yBMWtj1NBKQw0SfGDL96qwyrtYq2CUJh-7oDbibO5pP9H4cuXuIQu2nGKyghwPYrr8opfrm_MhDHYMeJrF1MM');
+                    "
+                  ></div>
+                  <div class="flex flex-col justify-center">
+                    <p
+                      class="text-white text-base font-medium leading-normal line-clamp-1"
+                    >
+                      Shadows of the Silent City
+                    </p>
+                    <p
+                      class="text-neutral-400 text-sm font-normal leading-normal line-clamp-2"
+                    >
+                      Episode 12 of 26
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-24 sm:w-32">
+                    <div class="w-full bg-neutral-700 rounded-full h-1.5">
+                      <div
+                        class="bg-primary-500 h-1.5 rounded-full progress-bar-value"
+                        style="width: 46%"
+                      ></div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-neutral-300 text-sm font-medium w-8 text-right"
+                  >
+                    46%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/public/app.js"></script>
+    <script>
+      // Verificar autenticación
+      AuthManager.checkAuth();
+      AuthManager.updateUIForAuth();
+
+      let currentStatus = 'watching';
+
+      // Cargar lista de animes
+      async function loadWatchlist(status = 'watching') {
+        currentStatus = status;
+        const container = document.querySelector('.grid.grid-cols-1.gap-2');
+        UI.showLoading(container);
+
+        try {
+          const animes = await API.getUserAnimes(status);
+          container.innerHTML = '';
+
+          if (animes.length === 0) {
+            container.innerHTML = '<p class="text-neutral-400 text-center py-8">No tienes animes en esta categoría</p>';
+            return;
+          }
+
+          animes.forEach(anime => {
+            const item = UI.createWatchlistItem(
+              anime,
+              handleUpdate,
+              handleDelete
+            );
+            container.appendChild(item);
+          });
+        } catch (error) {
+          UI.showNotification(error.message, 'error');
+          container.innerHTML = '<p class="text-neutral-400 text-center py-8">Error al cargar la lista</p>';
+        }
+      }
+
+      // Actualizar anime
+      async function handleUpdate(anime) {
+        const newEpisode = prompt(`Episodio actual (${anime.current_episode}/${anime.total_episodes}):`, anime.current_episode);
+        if (newEpisode === null) return;
+
+        try {
+          await API.updateUserAnime(anime.id, {
+            status: anime.status,
+            current_episode: parseInt(newEpisode),
+            rating: anime.rating,
+            notes: anime.notes
+          });
+          UI.showNotification('Anime actualizado');
+          loadWatchlist(currentStatus);
+        } catch (error) {
+          UI.showNotification(error.message, 'error');
+        }
+      }
+
+      // Eliminar anime
+      async function handleDelete(anime) {
+        if (!confirm(`¿Eliminar "${anime.title}" de tu lista?`)) return;
+
+        try {
+          await API.removeFromList(anime.id);
+          UI.showNotification('Anime eliminado de tu lista');
+          loadWatchlist(currentStatus);
+        } catch (error) {
+          UI.showNotification(error.message, 'error');
+        }
+      }
+
+      // Event listeners para tabs
+      document.querySelectorAll('.border-b.border-neutral-800 a').forEach((tab, index) => {
+        const statuses = ['watching', 'completed', 'plan_to_watch'];
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Actualizar UI de tabs
+          document.querySelectorAll('.border-b.border-neutral-800 a').forEach(t => {
+            t.classList.remove('border-primary-500', 'text-white');
+            t.classList.add('border-transparent', 'text-neutral-400');
+          });
+          tab.classList.remove('border-transparent', 'text-neutral-400');
+          tab.classList.add('border-primary-500', 'text-white');
+
+          loadWatchlist(statuses[index]);
+        });
+      });
+
+      // Cargar inicialmente
+      loadWatchlist('watching');
+    </script>
+  </body>
+</html>

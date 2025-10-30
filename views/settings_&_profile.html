@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link
+      as="style"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+      onload="this.rel='stylesheet'"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <title>Kiroku</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/settings-profile.css" />
+  </head>
+  <body
+    class="bg-[var(--background-color)]"
+  >
+    <div class="flex flex-col lg:flex-row min-h-screen">
+      <aside
+        class="w-full lg:w-80 bg-zinc-900 text-[var(--text-color)] p-6 shrink-0"
+      >
+        <div class="flex items-center gap-4 mb-6">
+          <img src="/public/logo-kiroku.png" alt="Kiroku logo" class="size-8" />
+          <h1 class="text-xl font-bold">Kiroku</h1>
+        </div>
+        <div class="flex items-center gap-4 mb-8 pb-6 border-b border-zinc-800">
+          <img
+            alt="User avatar"
+            class="size-12 rounded-full"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG7TZrEI1v5XFxdWbaqB67s03EFdwCMwb7JJBzqsfNi8Qd6P0OuMCqo6CkXYBpg9b5yQUluEdoISbseEyEkpObr2-HVZB8Yk7EpHNo7-H_8qq7se0PUbcQFx6cqzXhtPwacqeJ_-PAJGRbh_nXsXDhUeX3Lb1f4ZjcBtGzZcb0E5DMPo-FxeskaEFqgFTu883v_0I2_opuAR6eCBmcmy__kmSAoNT8Vogc0wRVTGZTv0cfDJJ1PNj1HkgVpNweldh4hLYRHBwA21c"
+          />
+          <div>
+            <h2 class="text-lg font-bold">Sophia</h2>
+            <p class="text-sm text-[var(--text-secondary-color)]">@sophia_r</p>
+          </div>
+        </div>
+        <nav class="flex flex-col gap-2">
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--secondary-color)] transition-colors"
+            href="anime_search_&_browse.html"
+          >
+            <i class="fas fa-home"></i>
+            <span class="font-medium">Home</span>
+          </a>
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--secondary-color)] transition-colors"
+            href="anime_search_&_browse.html"
+          >
+            <i class="fas fa-search"></i>
+            <span class="font-medium">Explore</span>
+          </a>
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--secondary-color)] transition-colors"
+            href="watchlist_dashboard.html"
+          >
+            <i class="fas fa-bookmark"></i>
+            <span class="font-medium">My List</span>
+          </a>
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--secondary-color)] transition-colors"
+            href="community_&_reviews.html"
+          >
+            <i class="fas fa-comments"></i>
+            <span class="font-medium">Forums</span>
+          </a>
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--secondary-color)] transition-colors"
+            href="anime_search_&_browse.html"
+          >
+            <i class="fas fa-newspaper"></i>
+            <span class="font-medium">News</span>
+          </a>
+          <a
+            class="flex items-center gap-4 p-3 rounded-lg bg-[var(--secondary-color)] text-[var(--primary-color)] transition-colors"
+            href="settings_&_profile.html"
+          >
+            <i class="fas fa-cog text-white"></i>
+            <span class="font-medium text-white">Settings</span>
+          </a>
+        </nav>
+      </aside>
+      <main class="flex-1 p-6 md:p-10">
+        <header class="mb-8">
+          <h1 class="text-4xl font-bold text-[var(--text-color)]">Settings</h1>
+        </header>
+        <div class="space-y-12">
+          <section>
+            <h2 class="text-2xl font-bold text-[var(--text-color)] mb-6">
+              Account
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Email</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    sophia.rodriguez@email.com
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Password</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    ********
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Language</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    English
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 class="text-2xl font-bold text-[var(--text-color)] mb-6">
+              Profile
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Name</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    Sophia Rodriguez
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Gender</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    Female
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Age</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">24</p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Country</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    United States
+                  </p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 class="text-2xl font-bold text-[var(--text-color)] mb-6">
+              Preferences
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">Theme</p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">Dark</p>
+                </div>
+                <button
+                  class="text-white hover:text-[var(--primary-color)] transition-colors"
+                >
+                  <span class="material-symbols-outlined"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">
+                    Notifications
+                  </p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    Enabled
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    type="checkbox"
+                    value=""
+                  />
+                  <div
+                    class="w-11 h-6 bg-[var(--secondary-color)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--primary-color)]"
+                  ></div>
+                </label>
+              </div>
+              <div
+                class="flex flex-wrap items-center justify-between p-4 rounded-lg bg-zinc-900"
+              >
+                <div>
+                  <p class="font-medium text-[var(--text-color)]">
+                    Recommendations
+                  </p>
+                  <p class="text-sm text-[var(--text-secondary-color)]">
+                    Enabled
+                  </p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input
+                    checked=""
+                    class="sr-only peer"
+                    type="checkbox"
+                    value=""
+                  />
+                  <div
+                    class="w-11 h-6 bg-[var(--secondary-color)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--primary-color)]"
+                  ></div>
+                </label>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="mt-12 flex justify-end">
+          <button
+            class="flex items-center justify-center rounded-lg h-12 px-6 bg-[var(--primary-color)] text-white text-base font-bold tracking-wide hover:opacity-90 transition-opacity"
+          >
+            Save Changes
+          </button>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
