@@ -21,7 +21,7 @@ Aplicación web para hacer seguimiento de tus animes favoritos usando datos de M
 
 **Frontend:**
 - Vanilla JavaScript
-- Tailwind CSS
+- CSS
 - Font Awesome (CDN)
 
 ## Instalación
@@ -40,44 +40,6 @@ pnpm dev
 
 El servidor corre en `http://localhost:3000`
 
-## Estructura
-
-```
-├── public/
-│   ├── css/           # Estilos
-│   └── app.js         # Cliente API
-├── views/             # Páginas HTML
-├── db.js              # Base de datos
-├── router.js          # Rutas API
-└── server.js          # Servidor
-```
-
-## API Endpoints
-
-**Autenticación:**
-- `POST /api/auth/register` - Registro
-- `POST /api/auth/login` - Login
-
-**Lista de usuario:**
-- `GET /api/user/anime` - Obtener lista
-- `POST /api/user/anime` - Agregar anime
-- `PUT /api/user/anime/:id` - Actualizar
-- `DELETE /api/user/anime/:id` - Eliminar
-
-**Jikan API:**
-- `GET /api/jikan/search` - Buscar animes
-- `GET /api/jikan/anime/:id` - Detalles completos
-- `GET /api/jikan/top` - Top animes
-- `GET /api/jikan/season/now` - Temporada actual
-- `POST /api/jikan/import/:id` - Importar a BD local
-
-## Uso
-
-1. Registrarse o iniciar sesión
-2. Buscar animes desde la página principal
-3. Ver detalles haciendo clic en un anime
-4. Agregar a tu lista personal
-5. Gestionar tu progreso desde "My List"
 
 ## Notas
 
@@ -85,13 +47,3 @@ El servidor corre en `http://localhost:3000`
 - La base de datos usa JSON temporalmente (se puede migrar a SQLite)
 - Los animes se importan automáticamente al hacer clic en ellos
 
-## Scripts
-
-```bash
-pnpm dev      # Desarrollo
-pnpm start    # Producción
-```
-
-## Licencia
-
-MIT
