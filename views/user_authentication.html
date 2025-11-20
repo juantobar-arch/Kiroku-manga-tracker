@@ -11,8 +11,11 @@
     <title>Kiroku</title>
     <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="/css/base.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../public/css/base.css" />
   </head>
   <body class="bg-[#111118]">
     <div
@@ -27,7 +30,11 @@
           class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-white/10 px-10 py-4"
         >
           <div class="flex items-center gap-4 text-white">
-            <img src="/public/logo-kiroku.png" alt="Kiroku logo" class="h-8 w-8" />
+            <img
+              src="/public/logo-kiroku.png"
+              alt="Kiroku logo"
+              class="h-8 w-8"
+            />
             <a href="anime_search_&_browse.html">
               <h2
                 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]"
@@ -40,22 +47,22 @@
             <nav class="hidden md:flex items-center gap-9">
               <a
                 class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
-                href="anime_search_&_browse.html"
+                href="./anime_search_&_browse.html"
                 >Home</a
               >
               <a
                 class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
-                href="anime_search_&_browse.html"
+                href="./anime_search_&_browse.html"
                 >Explore</a
               >
               <a
                 class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
-                href="watchlist_dashboard.html"
+                href="./watchlist_dashboard.html"
                 >My List</a
               >
               <a
                 class="text-white/80 hover:text-white text-sm font-medium leading-normal transition-colors"
-                href="anime_search_&_browse.html"
+                href="./anime_search_&_browse.html"
                 >News</a
               >
             </nav>
@@ -139,62 +146,7 @@
         </main>
       </div>
     </div>
-    <script src="/app.js"></script>
-    <script>
-      let isSignup = true;
-
-      const form = document.getElementById('auth-form');
-      const submitBtn = document.getElementById('submit-btn');
-      const toggleMode = document.getElementById('toggle-mode');
-      const toggleText = document.getElementById('toggle-text');
-      const confirmPasswordContainer = document.getElementById('confirm-password-container');
-      const title = document.querySelector('h2');
-      const subtitle = document.querySelector('h2 + p');
-
-      // Alternar entre login y signup
-      toggleMode.addEventListener('click', () => {
-        isSignup = !isSignup;
-        
-        if (isSignup) {
-          title.textContent = 'Create Your Account';
-          subtitle.textContent = 'Join Kiroku to track and discover new anime.';
-          submitBtn.textContent = 'Sign Up';
-          toggleText.textContent = 'Already have an account?';
-          toggleMode.textContent = 'Log in';
-          confirmPasswordContainer.style.display = 'block';
-        } else {
-          title.textContent = 'Welcome Back';
-          subtitle.textContent = 'Log in to continue tracking your anime.';
-          submitBtn.textContent = 'Log In';
-          toggleText.textContent = "Don't have an account?";
-          toggleMode.textContent = 'Sign up';
-          confirmPasswordContainer.style.display = 'none';
-        }
-      });
-
-      // Manejar submit
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const passwordConfirm = document.getElementById('password-confirm').value;
-
-        if (isSignup) {
-          if (password !== passwordConfirm) {
-            UI.showNotification('Las contraseñas no coinciden', 'error');
-            return;
-          }
-          await AuthManager.handleRegister(email, password);
-        } else {
-          await AuthManager.handleLogin(email, password);
-        }
-      });
-
-      // Si ya está autenticado, redirigir
-      if (Storage.isAuthenticated()) {
-        window.location.href = '/';
-      }
-    </script>
+    <script src="/app.js" defer></script>
+    <script src="/js/user-auth.js" defer></script>
   </body>
 </html>

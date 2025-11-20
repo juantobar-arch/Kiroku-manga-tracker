@@ -8,16 +8,23 @@
       onload="this.rel='stylesheet'"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <title>Kiroku</title>
     <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="stylesheet" href="/css/base.css" />
-    <link rel="stylesheet" href="/css/watchlist-dashboard.css" />
+    <link rel="stylesheet" href="../public/css/base.css" />
+    <link rel="stylesheet" href="../public/css/watchlist-dashboard.css" />
   </head>
-  <body
-    class="bg-neutral-900 text-neutral-100"
-  >
+  <body class="bg-neutral-900 text-neutral-100">
+    <script>
+      // Proteger página: si no está autenticado, redirigir a login
+      if (!AuthManager || !AuthManager.isAuthenticated()) {
+        window.location.href = "user_authentication.html";
+      }
+    </script>
     <div
       class="relative flex h-auto min-h-screen w-full flex-col bg-neutral-900 dark group/design-root overflow-x-hidden"
     >
@@ -27,7 +34,11 @@
         >
           <div class="flex items-center gap-10">
             <div class="flex items-center gap-3 text-white">
-              <img src="/logo-kiroku.png" alt="Kiroku logo" class="h-8 w-8" />
+              <img
+                src="../public/logo-kiroku.png"
+                alt="Kiroku logo"
+                class="h-8 w-8"
+              />
               <a href="anime_search_&_browse.html">
                 <h1 class="text-xl font-bold tracking-tight">Kiroku</h1>
               </a>
@@ -43,7 +54,11 @@
                 href="anime_search_&_browse.html"
                 >Explore</a
               >
-              <a class="text-white text-sm font-medium" href="watchlist_dashboard.html">My List</a>
+              <a
+                class="text-white text-sm font-medium"
+                href="watchlist_dashboard.html"
+                >My List</a
+              >
             </nav>
           </div>
           <div class="flex flex-1 justify-end items-center gap-4">
@@ -309,30 +324,35 @@
         </main>
       </div>
     </div>
-    <script src="/app.js"></script>
+    <script src="/app.js" defer></script>
     <script>
       // Verificar autenticación
+      if (!AuthManager.isAuthenticated()) {
+        window.location.href = "login.html";
+      }
+
       AuthManager.checkAuth();
       AuthManager.updateUIForAuth();
 
-      let currentStatus = 'watching';
+      let currentStatus = "watching";
 
       // Cargar lista de animes
-      async function loadWatchlist(status = 'watching') {
+      async function loadWatchlist(status = "watching") {
         currentStatus = status;
-        const container = document.querySelector('.grid.grid-cols-1.gap-2');
+        const container = document.querySelector(".grid.grid-cols-1.gap-2");
         UI.showLoading(container);
 
         try {
           const animes = await API.getUserAnimes(status);
-          container.innerHTML = '';
+          container.innerHTML = "";
 
           if (animes.length === 0) {
-            container.innerHTML = '<p class="text-neutral-400 text-center py-8">No tienes animes en esta categoría</p>';
+            container.innerHTML =
+              '<p class="text-neutral-400 text-center py-8">No tienes animes en esta categoría</p>';
             return;
           }
 
-          animes.forEach(anime => {
+          animes.forEach((anime) => {
             const item = UI.createWatchlistItem(
               anime,
               handleUpdate,
@@ -341,14 +361,18 @@
             container.appendChild(item);
           });
         } catch (error) {
-          UI.showNotification(error.message, 'error');
-          container.innerHTML = '<p class="text-neutral-400 text-center py-8">Error al cargar la lista</p>';
+          UI.showNotification(error.message, "error");
+          container.innerHTML =
+            '<p class="text-neutral-400 text-center py-8">Error al cargar la lista</p>';
         }
       }
 
       // Actualizar anime
       async function handleUpdate(anime) {
-        const newEpisode = prompt(`Episodio actual (${anime.current_episode}/${anime.total_episodes}):`, anime.current_episode);
+        const newEpisode = prompt(
+          `Episodio actual (${anime.current_episode}/${anime.total_episodes}):`,
+          anime.current_episode
+        );
         if (newEpisode === null) return;
 
         try {
@@ -356,12 +380,12 @@
             status: anime.status,
             current_episode: parseInt(newEpisode),
             rating: anime.rating,
-            notes: anime.notes
+            notes: anime.notes,
           });
-          UI.showNotification('Anime actualizado');
+          UI.showNotification("Anime actualizado");
           loadWatchlist(currentStatus);
         } catch (error) {
-          UI.showNotification(error.message, 'error');
+          UI.showNotification(error.message, "error");
         }
       }
 
@@ -371,33 +395,37 @@
 
         try {
           await API.removeFromList(anime.id);
-          UI.showNotification('Anime eliminado de tu lista');
+          UI.showNotification("Anime eliminado de tu lista");
           loadWatchlist(currentStatus);
         } catch (error) {
-          UI.showNotification(error.message, 'error');
+          UI.showNotification(error.message, "error");
         }
       }
 
       // Event listeners para tabs
-      document.querySelectorAll('.border-b.border-neutral-800 a').forEach((tab, index) => {
-        const statuses = ['watching', 'completed', 'plan_to_watch'];
-        tab.addEventListener('click', (e) => {
-          e.preventDefault();
-          
-          // Actualizar UI de tabs
-          document.querySelectorAll('.border-b.border-neutral-800 a').forEach(t => {
-            t.classList.remove('border-primary-500', 'text-white');
-            t.classList.add('border-transparent', 'text-neutral-400');
-          });
-          tab.classList.remove('border-transparent', 'text-neutral-400');
-          tab.classList.add('border-primary-500', 'text-white');
+      document
+        .querySelectorAll(".border-b.border-neutral-800 a")
+        .forEach((tab, index) => {
+          const statuses = ["watching", "completed", "plan_to_watch"];
+          tab.addEventListener("click", (e) => {
+            e.preventDefault();
 
-          loadWatchlist(statuses[index]);
+            // Actualizar UI de tabs
+            document
+              .querySelectorAll(".border-b.border-neutral-800 a")
+              .forEach((t) => {
+                t.classList.remove("border-primary-500", "text-white");
+                t.classList.add("border-transparent", "text-neutral-400");
+              });
+            tab.classList.remove("border-transparent", "text-neutral-400");
+            tab.classList.add("border-primary-500", "text-white");
+
+            loadWatchlist(statuses[index]);
+          });
         });
-      });
 
       // Cargar inicialmente
-      loadWatchlist('watching');
+      loadWatchlist("watching");
     </script>
   </body>
 </html>
