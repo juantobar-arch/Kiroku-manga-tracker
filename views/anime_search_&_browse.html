@@ -21,19 +21,12 @@
   </head>
 
   <body class="page">
-    <script>
-      // Proteger página: si no está autenticado, redirigir a login
-      if (!AuthManager || !AuthManager.isAuthenticated()) {
-        window.location.href = "user_authentication.html";
-      }
-    </script>
-
     <!-- HEADER -->
     <header class="header">
       <div class="header__left">
         <div class="header__logo">
           <img
-            src="/logo-kiroku.png"
+            src="../public/logo-kiroku.png"
             alt="Kiroku logo"
             class="header__logo-img"
           />
@@ -114,17 +107,9 @@
         </article>
       </section>
     </main>
-    <!-- Load app.js and the page logic with defer so parsing isn't blocked.
-         app.js must come first (provides UI / API). -->
-    <script src="/app.js" defer></script>
-    <script src="/js/anime-search.js" defer></script>
-    <script>
-      // Verificar autenticación antes de mostrar contenido
-      if (!AuthManager.isAuthenticated()) {
-        window.location.href = "login.html";
-      } else {
-        AuthManager.updateUIForAuth();
-      }
-    </script>
+
+    <!-- Scripts con rutas correctas -->
+    <script src="../public/app.js" defer></script>
+    <script src="../public/js/anime-search.js" defer></script>
   </body>
 </html>

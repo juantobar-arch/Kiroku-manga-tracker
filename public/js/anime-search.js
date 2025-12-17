@@ -1,108 +1,152 @@
 (function () {
-  // Esperar DOMContentLoaded por seguridad (defer + orden aseguran app.js ya disponible)
-  function init() {
-    // Verificar autenticación
-    if (!AuthManager.isAuthenticated()) {
-      window.location.href = "login.html";
-      return;
-    }
+  "use strict";
 
-    let currentPage = 1;
-    let isLoading = false;
+  // Elementos del DOM
+  const grid = document.querySelector(".anime-grid");
 
-    // Cargar animes desde Jikan API
-    async function loadAnimes(search = "", page = 1) {
-      const grid = document.querySelector(".anime-grid");
+  // Estado
+  let currentPage = 1;
+  let isLoading = false;
+  let searchTimeout;
 
-      if (page === 1) {
-        UI.showLoading(grid);
+  // Validar elementos críticos
+  if (!grid) {
+    console.error("[AnimeSearch] Grid no encontrado");
+    return;
+  }
+
+  /**
+   * Cargar animes desde la API
+   * @param {string} search - Término de búsqueda
+   * @param {number} page - Número de página
+   */
+  async function loadAnimes(search = "", page = 1) {
+    if (isLoading) return;
+
+    isLoading = true;
+    const isFirstPage = page === 1;
+
+    try {
+      if (isFirstPage) {
+        grid.innerHTML = '<div class="loading">Cargando animes...</div>';
       }
 
-      isLoading = true;
+      console.log(
+        `[AnimeSearch] Cargando: "${
+          search || "temporada actual"
+        }" - página ${page}`
+      );
 
-      try {
-        let data;
+      // Llamar a la API
+      const data = search
+        ? await API.searchJikan(search, page, 25)
+        : await API.getCurrentSeasonAnimes(page);
 
-        if (search) {
-          data = await API.searchJikan(search, page, 25);
-        } else {
-          data = await API.getCurrentSeasonAnimes(page);
-        }
-
-        if (page === 1) {
-          grid.innerHTML = "";
-        }
-
-        if (!data.data || data.data.length === 0) {
-          if (page === 1) {
-            grid.innerHTML =
-              '<p style="text-align: center; padding: 40px; color: #9ca3af;">No se encontraron animes</p>';
-          }
-          return;
-        }
-
-        data.data.forEach((anime) => {
-          const card = UI.createAnimeCard(anime, async (jikanAnime) => {
-            try {
-              const imported = await API.importJikanAnime(jikanAnime.mal_id);
-              window.location.href = `anime_detail_screen.html?id=${imported.id}&jikan_id=${jikanAnime.mal_id}`;
-            } catch (error) {
-              UI.showNotification(error.message, "error");
-            }
-          });
-          grid.appendChild(card);
-        });
-
-        currentPage = page;
-      } catch (error) {
-        UI.showNotification(error.message, "error");
-        if (page === 1) {
+      // Validar respuesta
+      if (!data?.data || data.data.length === 0) {
+        if (isFirstPage) {
           grid.innerHTML =
-            '<p style="text-align: center; padding: 40px; color: #9ca3af;">Error al cargar animes</p>';
+            '<p style="text-align: center; padding: 40px; color: #9ca3af;">No se encontraron animes</p>';
         }
-      } finally {
-        isLoading = false;
+        return;
       }
+
+      console.log(`[AnimeSearch] ${data.data.length} animes obtenidos`);
+
+      // Limpiar grid si es primera página
+      if (isFirstPage) {
+        grid.innerHTML = "";
+      }
+
+      // Renderizar tarjetas
+      data.data.forEach((anime) => {
+        try {
+          const card = UI.createAnimeCard(anime, handleAnimeClick);
+          if (card) {
+            grid.appendChild(card);
+          }
+        } catch (err) {
+          console.error("[AnimeSearch] Error procesando anime:", anime, err);
+        }
+      });
+
+      currentPage = page;
+    } catch (error) {
+      console.error("[AnimeSearch] Error:", error.message);
+      UI.showNotification(
+        `Error: ${error.message || "No se pudieron cargar los animes"}`,
+        "error"
+      );
+
+      if (isFirstPage) {
+        grid.innerHTML =
+          '<p style="text-align: center; padding: 40px; color: #ef4444;">Error al cargar animes</p>';
+      }
+    } finally {
+      isLoading = false;
     }
+  }
 
-    // Buscar animes con debounce
-    let searchTimeout;
-    const searchInputs = document.querySelectorAll(
-      ".search__input, .search-box__input"
-    );
-    searchInputs.forEach((input) => {
+  /**
+   * Manejar click en tarjeta de anime
+   * @param {Object} anime - Datos del anime
+   */
+  async function handleAnimeClick(anime) {
+    try {
+      console.log(`[AnimeSearch] Navegando a anime: ${anime.title}`);
+      // Navigate directly with Jikan ID since we don't have backend import
+      window.location.href = `anime_detail_screen.html?jikan_id=${anime.mal_id}`;
+    } catch (error) {
+      console.error("[AnimeSearch] Error al navegar:", error);
+      UI.showNotification(`Error: ${error.message}`, "error");
+    }
+  }
+
+  /**
+   * Manejar búsqueda con debounce
+   */
+  function handleSearch(e) {
+    clearTimeout(searchTimeout);
+    const search = e.target.value.trim();
+
+    searchTimeout = setTimeout(() => {
+      currentPage = 1;
+      loadAnimes(search, 1);
+    }, 500);
+  }
+
+  /**
+   * Manejar scroll infinito
+   */
+  function handleScroll() {
+    if (isLoading) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - 300;
+
+    if (isNearBottom) {
+      const searchValue =
+        document.querySelector(".search__input")?.value.trim() || "";
+      loadAnimes(searchValue, currentPage + 1);
+    }
+  }
+
+  // Event Listeners
+  document
+    .querySelectorAll(".search__input, .search-box__input")
+    .forEach((input) => {
+      let timeout;
       input.addEventListener("input", (e) => {
-        clearTimeout(searchTimeout);
-        const search = e.target.value;
-
-        searchTimeout = setTimeout(() => {
-          currentPage = 1;
-          loadAnimes(search, 1);
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          loadAnimes(e.target.value.trim(), 1);
         }, 500);
       });
     });
 
-    // Infinite scroll
-    window.addEventListener("scroll", () => {
-      if (isLoading) return;
+  window.addEventListener("scroll", handleScroll, { passive: true });
 
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-
-      if (scrollTop + clientHeight >= scrollHeight - 100) {
-        const searchValue =
-          document.querySelector(".search__input")?.value || "";
-        loadAnimes(searchValue, currentPage + 1);
-      }
-    });
-
-    // Inicializar
-    loadAnimes();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  // Inicializar
+  console.log("[AnimeSearch] Iniciando...");
+  loadAnimes();
 })();

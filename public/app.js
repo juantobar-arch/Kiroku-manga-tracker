@@ -1,5 +1,5 @@
-// API Base URL
-const API_URL = "http://localhost:3000/api";
+// Jikan API base URL - direct API calls without backend
+const JIKAN_API_URL = "https://api.jikan.moe/v4";
 
 // Utilidades para localStorage
 const Storage = {
@@ -26,9 +26,12 @@ class API {
     }
 
     try {
+      console.log(`[API] Request: ${API_URL}${endpoint}`);
       const response = await fetch(`${API_URL}${endpoint}`, {
         ...options,
         headers,
+        mode: "cors",
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -93,30 +96,64 @@ class API {
     });
   }
 
-  // Jikan API (MyAnimeList)
+  // Jikan API (MyAnimeList) - Direct API calls
   static async searchJikan(query, page = 1, limit = 25) {
-    const params = new URLSearchParams({ q: query, page, limit });
-    return this.request(`/jikan/search?${params}`);
+    try {
+      const response = await fetch(
+        `${JIKAN_API_URL}/anime?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Jikan API Error:", error);
+      throw new Error("Error searching anime");
+    }
   }
 
   static async getJikanAnime(id) {
-    return this.request(`/jikan/anime/${id}`);
+    try {
+      const response = await fetch(`${JIKAN_API_URL}/anime/${id}/full`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Jikan API Error:", error);
+      throw new Error("Error getting anime details");
+    }
   }
 
   static async getTopAnimes(page = 1, limit = 25) {
-    const params = new URLSearchParams({ page, limit });
-    return this.request(`/jikan/top?${params}`);
+    try {
+      const response = await fetch(
+        `${JIKAN_API_URL}/top/anime?page=${page}&limit=${limit}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Jikan API Error:", error);
+      throw new Error("Error getting top anime");
+    }
   }
 
   static async getCurrentSeasonAnimes(page = 1) {
-    const params = new URLSearchParams({ page });
-    return this.request(`/jikan/season/now?${params}`);
+    try {
+      const response = await fetch(`${JIKAN_API_URL}/seasons/now?page=${page}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Jikan API Error:", error);
+      throw new Error("Error getting current season anime");
+    }
   }
 
   static async importJikanAnime(jikanId) {
-    return this.request(`/jikan/import/${jikanId}`, {
-      method: "POST",
-    });
+    // Since we don't have a backend, return a mock response
+    // In a real app, you'd save this to localStorage or a client-side DB
+    return {
+      id: Date.now(), // Mock ID
+      mal_id: parseInt(jikanId),
+      imported: true,
+      message: "Anime imported successfully (client-side only)"
+    };
   }
 }
 
